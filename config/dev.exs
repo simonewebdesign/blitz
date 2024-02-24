@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :blitz, Blitz.Repo,
-  username: "postgres",
+  username: "simo",
   password: "postgres",
   hostname: "localhost",
   database: "blitz_dev",
