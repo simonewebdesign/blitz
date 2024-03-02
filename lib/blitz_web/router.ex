@@ -25,6 +25,8 @@ defmodule BlitzWeb.Router do
   #   pipe_through :api
   # end
 
+  resources "/users", UserController
+
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:blitz, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
