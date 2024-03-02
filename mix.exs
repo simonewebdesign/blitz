@@ -52,8 +52,8 @@ defmodule Blitz.MixProject do
       {:bandit, "~> 1.2"},
 
       # My own deps
-      {:crawly, "> 0.0.0"},
       {:floki, "> 0.0.0"},
+      {:httpoison, "> 0.0.0"},
     ]
   end
 
