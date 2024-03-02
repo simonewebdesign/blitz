@@ -1,6 +1,6 @@
 defmodule Blitz.Spider do
-  def fetch() do
-    HTTPoison.get! "http://example.com"
+  def fetch(url) do
+    HTTPoison.get! url
   end
 
   def parse(response, selector) do
