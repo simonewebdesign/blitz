@@ -1,0 +1,17 @@
+<.header>
+  Watching <%= @watching.id %>
+  <:subtitle>This is a watching record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/watchings/#{@watching}/edit"}>
+      <.button>Edit watching</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Url"><%= @watching.url %></:item>
+  <:item title="Retries"><%= @watching.retries %></:item>
+  <:item title="Fetch frequency seconds"><%= @watching.fetch_frequency_seconds %></:item>
+</.list>
+
+<.back navigate={~p"/watchings"}>Back to watchings</.back>

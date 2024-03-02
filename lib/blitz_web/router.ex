@@ -26,6 +26,7 @@ defmodule BlitzWeb.Router do
   # end
 
   resources "/users", UserController
+  resources "/watchings", WatchingController
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:blitz, :dev_routes) do

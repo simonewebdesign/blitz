@@ -1,0 +1,25 @@
+<.header>
+  Listing Watchings
+  <:actions>
+    <.link href={~p"/watchings/new"}>
+      <.button>New Watching</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="watchings" rows={@watchings} row_click={&JS.navigate(~p"/watchings/#{&1}")}>
+  <:col :let={watching} label="Url"><%= watching.url %></:col>
+  <:col :let={watching} label="Retries"><%= watching.retries %></:col>
+  <:col :let={watching} label="Fetch frequency seconds"><%= watching.fetch_frequency_seconds %></:col>
+  <:action :let={watching}>
+    <div class="sr-only">
+      <.link navigate={~p"/watchings/#{watching}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/watchings/#{watching}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={watching}>
+    <.link href={~p"/watchings/#{watching}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

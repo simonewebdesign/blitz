@@ -1,0 +1,8 @@
+<.header>
+  Edit Watching <%= @watching.id %>
+  <:subtitle>Use this form to manage watching records in your database.</:subtitle>
+</.header>
+
+<.watching_form changeset={@changeset} action={~p"/watchings/#{@watching}"} />
+
+<.back navigate={~p"/watchings"}>Back to watchings</.back>
