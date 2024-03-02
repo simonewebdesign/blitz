@@ -60,4 +60,60 @@ defmodule Blitz.CoreTest do
       assert %Ecto.Changeset{} = Core.change_watching(watching)
     end
   end
+
+  describe "attempts" do
+    alias Blitz.Core.Attempt
+
+    import Blitz.CoreFixtures
+
+    @invalid_attrs %{response_code: nil, response_data: nil}
+
+    test "list_attempts/0 returns all attempts" do
+      attempt = attempt_fixture()
+      assert Core.list_attempts() == [attempt]
+    end
+
+    test "get_attempt!/1 returns the attempt with given id" do
+      attempt = attempt_fixture()
+      assert Core.get_attempt!(attempt.id) == attempt
+    end
+
+    test "create_attempt/1 with valid data creates a attempt" do
+      valid_attrs = %{response_code: 42, response_data: "some response_data"}
+
+      assert {:ok, %Attempt{} = attempt} = Core.create_attempt(valid_attrs)
+      assert attempt.response_code == 42
+      assert attempt.response_data == "some response_data"
+    end
+
+    test "create_attempt/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Core.create_attempt(@invalid_attrs)
+    end
+
+    test "update_attempt/2 with valid data updates the attempt" do
+      attempt = attempt_fixture()
+      update_attrs = %{response_code: 43, response_data: "some updated response_data"}
+
+      assert {:ok, %Attempt{} = attempt} = Core.update_attempt(attempt, update_attrs)
+      assert attempt.response_code == 43
+      assert attempt.response_data == "some updated response_data"
+    end
+
+    test "update_attempt/2 with invalid data returns error changeset" do
+      attempt = attempt_fixture()
+      assert {:error, %Ecto.Changeset{}} = Core.update_attempt(attempt, @invalid_attrs)
+      assert attempt == Core.get_attempt!(attempt.id)
+    end
+
+    test "delete_attempt/1 deletes the attempt" do
+      attempt = attempt_fixture()
+      assert {:ok, %Attempt{}} = Core.delete_attempt(attempt)
+      assert_raise Ecto.NoResultsError, fn -> Core.get_attempt!(attempt.id) end
+    end
+
+    test "change_attempt/1 returns a attempt changeset" do
+      attempt = attempt_fixture()
+      assert %Ecto.Changeset{} = Core.change_attempt(attempt)
+    end
+  end
 end

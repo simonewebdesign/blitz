@@ -101,4 +101,100 @@ defmodule Blitz.Core do
   def change_watching(%Watching{} = watching, attrs \\ %{}) do
     Watching.changeset(watching, attrs)
   end
+
+  alias Blitz.Core.Attempt
+
+  @doc """
+  Returns the list of attempts.
+
+  ## Examples
+
+      iex> list_attempts()
+      [%Attempt{}, ...]
+
+  """
+  def list_attempts do
+    Repo.all(Attempt)
+  end
+
+  @doc """
+  Gets a single attempt.
+
+  Raises `Ecto.NoResultsError` if the Attempt does not exist.
+
+  ## Examples
+
+      iex> get_attempt!(123)
+      %Attempt{}
+
+      iex> get_attempt!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_attempt!(id), do: Repo.get!(Attempt, id)
+
+  @doc """
+  Creates a attempt.
+
+  ## Examples
+
+      iex> create_attempt(%{field: value})
+      {:ok, %Attempt{}}
+
+      iex> create_attempt(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_attempt(attrs \\ %{}) do
+    %Attempt{}
+    |> Attempt.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a attempt.
+
+  ## Examples
+
+      iex> update_attempt(attempt, %{field: new_value})
+      {:ok, %Attempt{}}
+
+      iex> update_attempt(attempt, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_attempt(%Attempt{} = attempt, attrs) do
+    attempt
+    |> Attempt.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a attempt.
+
+  ## Examples
+
+      iex> delete_attempt(attempt)
+      {:ok, %Attempt{}}
+
+      iex> delete_attempt(attempt)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_attempt(%Attempt{} = attempt) do
+    Repo.delete(attempt)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking attempt changes.
+
+  ## Examples
+
+      iex> change_attempt(attempt)
+      %Ecto.Changeset{data: %Attempt{}}
+
+  """
+  def change_attempt(%Attempt{} = attempt, attrs \\ %{}) do
+    Attempt.changeset(attempt, attrs)
+  end
 end

@@ -1,0 +1,24 @@
+<.header>
+  Listing Attempts
+  <:actions>
+    <.link href={~p"/attempts/new"}>
+      <.button>New Attempt</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="attempts" rows={@attempts} row_click={&JS.navigate(~p"/attempts/#{&1}")}>
+  <:col :let={attempt} label="Response code"><%= attempt.response_code %></:col>
+  <:col :let={attempt} label="Response data"><%= attempt.response_data %></:col>
+  <:action :let={attempt}>
+    <div class="sr-only">
+      <.link navigate={~p"/attempts/#{attempt}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/attempts/#{attempt}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={attempt}>
+    <.link href={~p"/attempts/#{attempt}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

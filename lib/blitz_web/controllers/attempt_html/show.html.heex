@@ -1,0 +1,16 @@
+<.header>
+  Attempt <%= @attempt.id %>
+  <:subtitle>This is a attempt record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/attempts/#{@attempt}/edit"}>
+      <.button>Edit attempt</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Response code"><%= @attempt.response_code %></:item>
+  <:item title="Response data"><%= @attempt.response_data %></:item>
+</.list>
+
+<.back navigate={~p"/attempts"}>Back to attempts</.back>

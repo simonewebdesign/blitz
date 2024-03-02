@@ -25,6 +25,7 @@ defmodule BlitzWeb.Router do
   #   pipe_through :api
   # end
 
+  resources "/attempts", AttemptController
   resources "/users", UserController
   resources "/watchings", WatchingController
 

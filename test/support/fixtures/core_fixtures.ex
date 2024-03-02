@@ -19,4 +19,19 @@ defmodule Blitz.CoreFixtures do
 
     watching
   end
+
+  @doc """
+  Generate a attempt.
+  """
+  def attempt_fixture(attrs \\ %{}) do
+    {:ok, attempt} =
+      attrs
+      |> Enum.into(%{
+        response_code: 42,
+        response_data: "some response_data"
+      })
+      |> Blitz.Core.create_attempt()
+
+    attempt
+  end
 end
