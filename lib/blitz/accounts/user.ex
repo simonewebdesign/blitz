@@ -14,6 +14,6 @@ defmodule Blitz.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:name])
-    |> validate_required([:name])
+    # |> validate_required([:name])
   end
 end
