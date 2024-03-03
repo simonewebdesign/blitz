@@ -18,16 +18,16 @@ defmodule BlitzWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    resources "/attempts", AttemptController
+    resources "/users", UserController
+    resources "/watchings", WatchingController
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", BlitzWeb do
   #   pipe_through :api
   # end
-
-  resources "/attempts", AttemptController
-  resources "/users", UserController
-  resources "/watchings", WatchingController
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:blitz, :dev_routes) do
