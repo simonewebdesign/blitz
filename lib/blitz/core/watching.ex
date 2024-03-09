@@ -16,7 +16,7 @@ defmodule Blitz.Core.Watching do
   @doc false
   def changeset(watching, attrs) do
     watching
-    |> cast(attrs, [:url, :retries, :fetch_frequency_seconds])
+    |> cast(attrs, [:url, :retries, :fetch_frequency_seconds, :user_id])
     |> validate_required([:url])
   end
 end
