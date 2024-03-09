@@ -15,7 +15,7 @@ defmodule Blitz.Core.Attempt do
   @doc false
   def changeset(attempt, attrs) do
     attempt
-    |> cast(attrs, [:response_code, :response_data])
+    |> cast(attrs, [:response_code, :response_data, :watching_id])
     # |> validate_required([:response_code, :response_data])
   end
 end

@@ -15,8 +15,35 @@ defmodule BlitzWeb.WatchingController do
   end
 
   def create(conn, %{"watching" => watching_params}) do
-    case Core.create_watching(watching_params) do
+    case Core.create_watching_for_main_user(watching_params) do
       {:ok, watching} ->
+        # Do a HTTP request in the background
+        Task.start_link(fn ->
+          IO.puts("Firing HTTP request to #{watching.url}")
+          case HTTPoison.get(watching.url) do
+            {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
+
+              IO.puts "creating attempt with watching id:"
+              IO.inspect watching.id
+
+              # Create an Attempt record
+              Core.create_attempt(%{
+                response_code: status_code,
+                response_data: body,
+                watching_id: watching.id,
+              })
+              {:ok, body}
+
+            # TODO: handle other HTTPoison responses e.g.
+            # HTTPoison error: %HTTPoison.Error{reason: :nxdomain, id: nil}
+
+            {:error, reason} ->
+              IO.puts("HTTPoison error: #{inspect(reason)}")
+              {:error, reason}
+          end
+        end)
+
+        # Redirect to the newly created watching
         conn
         |> put_flash(:info, "Watching created successfully.")
         |> redirect(to: ~p"/watchings/#{watching}")

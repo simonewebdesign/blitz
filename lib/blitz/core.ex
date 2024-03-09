@@ -55,6 +55,13 @@ defmodule Blitz.Core do
     |> Repo.insert()
   end
 
+  def create_watching_for_main_user(attrs \\ %{}) do
+    %Watching{}
+    |> Watching.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, "14c59c04-2a6a-4b8f-8b7d-dfe91f50e2e6")
+    |> Repo.insert()
+  end
+
   @doc """
   Updates a watching.
 
@@ -134,7 +141,7 @@ defmodule Blitz.Core do
   def get_attempt!(id), do: Repo.get!(Attempt, id)
 
   @doc """
-  Creates a attempt.
+  Creates an attempt.
 
   ## Examples
 
@@ -152,7 +159,7 @@ defmodule Blitz.Core do
   end
 
   @doc """
-  Updates a attempt.
+  Updates an attempt.
 
   ## Examples
 
@@ -170,7 +177,7 @@ defmodule Blitz.Core do
   end
 
   @doc """
-  Deletes a attempt.
+  Deletes an attempt.
 
   ## Examples
 
