@@ -15,7 +15,9 @@ defmodule BlitzWeb.WatchingController do
   end
 
   def create(conn, %{"watching" => watching_params}) do
-    case Core.create_watching_for_main_user(watching_params) do
+    watching_params = Map.put(watching_params, "user_id", "14c59c04-2a6a-4b8f-8b7d-dfe91f50e2e6")
+
+    case Core.create_watching(watching_params) do
       {:ok, watching} ->
         # Do a HTTP request in the background
         Task.start_link(fn ->
