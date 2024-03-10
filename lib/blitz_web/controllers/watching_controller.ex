@@ -25,16 +25,26 @@ defmodule BlitzWeb.WatchingController do
           case HTTPoison.get(watching.url) do
             {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
 
-              IO.puts "creating attempt with watching id:"
-              IO.inspect watching.id
+              # Attempt to parse the response body to find the requested value to watch
+              case Blitz.Parser.parse(body, watching.css_selector) do
+                {:ok, text} ->
+                  IO.puts("Parsed text: #{text}")
 
-              # Create an Attempt record
-              Core.create_attempt(%{
-                response_code: status_code,
-                response_data: body,
-                watching_id: watching.id,
-              })
-              {:ok, body}
+                  IO.puts "creating attempt with watching id:"
+                  IO.inspect watching.id
+
+                  # Create an Attempt record
+                  Core.create_attempt(%{
+                    response_code: status_code,
+                    response_data: body,
+                    watching_id: watching.id,
+                    parsed_value: text,
+                  })
+
+                  :ok
+                # {:error, reason} ->
+                #   IO.puts("Parser error: #{inspect(reason)}")
+              end
 
             # TODO: handle other HTTPoison responses e.g.
             # HTTPoison error: %HTTPoison.Error{reason: :nxdomain, id: nil}
