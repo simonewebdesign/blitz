@@ -8,11 +8,17 @@ defmodule Blitz.PeriodicJob do
 
   # Client API
 
-  @doc "Starts the job."
-  @spec start_link(integer(), integer()) :: GenServer.on_start()
-  # @spec start_link() :: GenServer.on_start()
-  def start_link(interval_seconds, allowed_retries) do
-    GenServer.start_link(__MODULE__, {interval_seconds * 1000, allowed_retries}, name: __MODULE__)
+  @doc """
+  Starts the periodic job with the specified interval in seconds.
+
+  ## Example
+
+      iex> pid = Blitz.PeriodicJob.start_link(&SomeModule.some_function/0, 5, 3)
+      {:ok, #PID<0.42.0>}
+  """
+  @spec start_link((-> :ok), pos_integer(), non_neg_integer()) :: GenServer.on_start()
+  def start_link(fun, interval_seconds, allowed_retries) do
+    GenServer.start_link(__MODULE__, {fun, interval_seconds * 1000, allowed_retries}, name: __MODULE__)
   end
 
   @doc "Stops the job."
@@ -30,11 +36,9 @@ defmodule Blitz.PeriodicJob do
   end
 
   def handle_info(:execute_job, state) do
-    {interval, _allowed_retries} = state
+    {fun, interval, _allowed_retries} = state
 
-    # TODO: Your background job logic here.
-    # Could the whole operation be astracted away and be completely decoupled?
-    IO.puts("Executing periodic job...")
+    fun.()
 
     schedule_job(interval)
     {:noreply, state}
