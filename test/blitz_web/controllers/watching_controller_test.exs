@@ -3,9 +3,9 @@ defmodule BlitzWeb.WatchingControllerTest do
 
   import Blitz.CoreFixtures
 
-  @create_attrs %{url: "some url", retries: 42, fetch_frequency_seconds: 42}
-  @update_attrs %{url: "some updated url", retries: 43, fetch_frequency_seconds: 43}
-  @invalid_attrs %{url: nil, retries: nil, fetch_frequency_seconds: nil}
+  @create_attrs %{url: "https://example.com", retries: 3, fetch_frequency_seconds: 5, css_selector: "some css_selector", user_id: "14c59c04-2a6a-4b8f-8b7d-dfe91f50e2e6"}
+  @update_attrs %{url: "some updated url", retries: 43, fetch_frequency_seconds: 43, css_selector: "some updated css_selector"}
+  @invalid_attrs %{url: nil, retries: nil, fetch_frequency_seconds: nil, css_selector: nil}
 
   describe "index" do
     test "lists all watchings", %{conn: conn} do

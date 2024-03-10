@@ -8,7 +8,7 @@ defmodule Blitz.CoreTest do
 
     import Blitz.CoreFixtures
 
-    @invalid_attrs %{url: nil, retries: nil, fetch_frequency_seconds: nil}
+    @invalid_attrs %{url: nil, retries: nil, fetch_frequency_seconds: nil, css_selector: nil}
 
     test "list_watchings/0 returns all watchings" do
       watching = watching_fixture()
@@ -21,12 +21,13 @@ defmodule Blitz.CoreTest do
     end
 
     test "create_watching/1 with valid data creates a watching" do
-      valid_attrs = %{url: "some url", retries: 42, fetch_frequency_seconds: 42}
+      valid_attrs = %{url: "https://example.com", retries: 3, fetch_frequency_seconds: 5, css_selector: "some css_selector"}
 
       assert {:ok, %Watching{} = watching} = Core.create_watching(valid_attrs)
-      assert watching.url == "some url"
+      assert watching.url == "https://example.com"
       assert watching.retries == 42
       assert watching.fetch_frequency_seconds == 42
+      assert watching.css_selector == "some css_selector"
     end
 
     test "create_watching/1 with invalid data returns error changeset" do
@@ -35,12 +36,13 @@ defmodule Blitz.CoreTest do
 
     test "update_watching/2 with valid data updates the watching" do
       watching = watching_fixture()
-      update_attrs = %{url: "some updated url", retries: 43, fetch_frequency_seconds: 43}
+      update_attrs = %{url: "some updated url", retries: 43, fetch_frequency_seconds: 43, css_selector: "some updated css_selector"}
 
       assert {:ok, %Watching{} = watching} = Core.update_watching(watching, update_attrs)
       assert watching.url == "some updated url"
       assert watching.retries == 43
       assert watching.fetch_frequency_seconds == 43
+      assert watching.css_selector == "some updated css_selector"
     end
 
     test "update_watching/2 with invalid data returns error changeset" do
@@ -60,6 +62,7 @@ defmodule Blitz.CoreTest do
       assert %Ecto.Changeset{} = Core.change_watching(watching)
     end
   end
+
 
   describe "attempts" do
     alias Blitz.Core.Attempt

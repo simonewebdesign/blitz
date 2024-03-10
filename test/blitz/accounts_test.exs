@@ -8,7 +8,7 @@ defmodule Blitz.AccountsTest do
 
     import Blitz.AccountsFixtures
 
-    @invalid_attrs %{name: nil}
+    @invalid_attrs %{name: nil, email: nil}
 
     test "list_users/0 returns all users" do
       user = user_fixture()
@@ -21,10 +21,11 @@ defmodule Blitz.AccountsTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      valid_attrs = %{name: "some name"}
+      valid_attrs = %{name: "some name", email: "some@email.com"}
 
       assert {:ok, %User{} = user} = Accounts.create_user(valid_attrs)
       assert user.name == "some name"
+      assert user.email == "some@email.com"
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -33,10 +34,11 @@ defmodule Blitz.AccountsTest do
 
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
-      update_attrs = %{name: "some updated name"}
+      update_attrs = %{name: "some updated name", email: "some@updatedemail.com"}
 
       assert {:ok, %User{} = user} = Accounts.update_user(user, update_attrs)
       assert user.name == "some updated name"
+      assert user.email == "some@updatedemail.com"
     end
 
     test "update_user/2 with invalid data returns error changeset" do

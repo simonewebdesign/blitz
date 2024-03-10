@@ -11,6 +11,7 @@ defmodule Blitz.AccountsFixtures do
     {:ok, user} =
       attrs
       |> Enum.into(%{
+        email: "some@email.com",
         name: "some name"
       })
       |> Blitz.Accounts.create_user()

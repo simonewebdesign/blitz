@@ -1,4 +1,4 @@
-defmodule Blitz.Repo.Migrations.CreateUsers do
+defmodule Blitz.Repo.Migrations.AddEmailToUsers do
   use Ecto.Migration
 
   def change do

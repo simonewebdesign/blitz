@@ -3,9 +3,9 @@ defmodule BlitzWeb.UserControllerTest do
 
   import Blitz.AccountsFixtures
 
-  @create_attrs %{name: "some name"}
-  @update_attrs %{name: "some updated name"}
-  @invalid_attrs %{name: nil}
+  @create_attrs %{name: "some name", email: "some@email.com"}
+  @update_attrs %{name: "some updated name", email: "some@updatedemail.com"}
+  @invalid_attrs %{name: nil, email: nil}
 
   describe "index" do
     test "lists all users", %{conn: conn} do

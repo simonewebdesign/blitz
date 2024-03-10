@@ -11,9 +11,10 @@ defmodule Blitz.CoreFixtures do
     {:ok, watching} =
       attrs
       |> Enum.into(%{
-        fetch_frequency_seconds: 42,
-        retries: 42,
-        url: "some url"
+        css_selector: "some css_selector",
+        fetch_frequency_seconds: 5,
+        retries: 3,
+        url: "https://example.com"
       })
       |> Blitz.Core.create_watching()
 
@@ -21,14 +22,14 @@ defmodule Blitz.CoreFixtures do
   end
 
   @doc """
-  Generate a attempt.
+  Generate an attempt.
   """
   def attempt_fixture(attrs \\ %{}) do
     {:ok, attempt} =
       attrs
       |> Enum.into(%{
         parsed_value: "some parsed_value",
-        response_code: 42,
+        response_code: 200,
         response_data: "some response_data"
       })
       |> Blitz.Core.create_attempt()

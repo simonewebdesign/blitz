@@ -21,6 +21,8 @@ defmodule BlitzWeb.AttemptControllerTest do
     end
   end
 
+  # TODO: figure out how to create an attempt with a watching.
+  # Do I need some library like FactoryBot to make this easier?
   describe "create attempt" do
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, ~p"/attempts", attempt: @create_attrs)
@@ -78,7 +80,14 @@ defmodule BlitzWeb.AttemptControllerTest do
   end
 
   defp create_attempt(_) do
+    watching = watching_fixture()
     attempt = attempt_fixture()
+    attempt = Map.put(attempt, :watching_id, watching.id)
     %{attempt: attempt}
+  end
+
+  defp create_watching(_) do
+    watching = watching_fixture()
+    %{watching: watching}
   end
 end
