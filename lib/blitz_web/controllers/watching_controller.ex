@@ -19,7 +19,7 @@ defmodule BlitzWeb.WatchingController do
 
     case Core.create_watching(watching_params) do
       {:ok, watching} ->
-        # Blitz.PeriodicJob.start_link(watching.interval_seconds, watching.allowed_retries)
+        # Blitz.PeriodicJob.start_link(watching.interval_seconds)
 
         # Do a HTTP request in the background
         Task.start_link(fn ->

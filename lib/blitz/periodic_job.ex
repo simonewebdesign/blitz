@@ -13,12 +13,12 @@ defmodule Blitz.PeriodicJob do
 
   ## Example
 
-      iex> pid = Blitz.PeriodicJob.start_link(&SomeModule.some_function/0, 5, 3)
+      iex> pid = Blitz.PeriodicJob.start_link(&SomeModule.some_function/0, 5)
       {:ok, #PID<0.42.0>}
   """
-  @spec start_link((-> :ok), pos_integer(), non_neg_integer()) :: GenServer.on_start()
-  def start_link(fun, interval_seconds, allowed_retries) do
-    GenServer.start_link(__MODULE__, {fun, interval_seconds * 1000, allowed_retries}, name: __MODULE__)
+  @spec start_link((-> :ok), pos_integer()) :: GenServer.on_start()
+  def start_link(fun, interval_seconds) do
+    GenServer.start_link(__MODULE__, {fun, interval_seconds * 1000}, name: __MODULE__)
   end
 
   @doc "Stops the job."
@@ -36,7 +36,7 @@ defmodule Blitz.PeriodicJob do
   end
 
   def handle_info(:execute_job, state) do
-    {fun, interval, _allowed_retries} = state
+    {fun, interval} = state
 
     fun.()
 
