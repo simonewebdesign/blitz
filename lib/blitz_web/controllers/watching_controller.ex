@@ -18,12 +18,12 @@ defmodule BlitzWeb.WatchingController do
     watching_params = Map.put(watching_params, "user_id", "14c59c04-2a6a-4b8f-8b7d-dfe91f50e2e6")
 
     case Core.create_watching(watching_params) do
-      {:ok, wat} ->
+      {:ok, watching} ->
         # Start a background job to fetch the data
         # TODO: put it under a supervision tree
         Blitz.PeriodicJob.start_link(
-          fn -> Blitz.Spider.perform(wat.id, wat.url, wat.css_selector) end,
-          wat.fetch_frequency_seconds
+          fn -> Blitz.Spider.perform(watching.id, watching.url, watching.css_selector) end,
+          watching.fetch_frequency_seconds
         )
 
         # Redirect to the newly created watching
