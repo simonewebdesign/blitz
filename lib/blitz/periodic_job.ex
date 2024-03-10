@@ -1,5 +1,8 @@
-# The sole purpose of this module is to execute background jobs at regular intervals.
 defmodule Blitz.PeriodicJob do
+  @moduledoc """
+  The sole purpose of this module is to execute background jobs at regular intervals.
+  """
+
   use GenServer
 
 
