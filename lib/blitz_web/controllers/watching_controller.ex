@@ -18,44 +18,13 @@ defmodule BlitzWeb.WatchingController do
     watching_params = Map.put(watching_params, "user_id", "14c59c04-2a6a-4b8f-8b7d-dfe91f50e2e6")
 
     case Core.create_watching(watching_params) do
-      {:ok, watching} ->
-        # Blitz.PeriodicJob.start_link(watching.interval_seconds)
-
-        # Do a HTTP request in the background
-        Task.start_link(fn ->
-          IO.puts("Firing HTTP request to #{watching.url}")
-          case HTTPoison.get(watching.url) do
-            {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
-
-              # Attempt to parse the response body to find the requested value to watch
-              case Blitz.Parser.parse(body, watching.css_selector) do
-                {:ok, text} ->
-                  IO.puts("Parsed text: #{text}")
-
-                  IO.puts "creating attempt with watching id:"
-                  IO.inspect watching.id
-
-                  # Create an Attempt record
-                  Core.create_attempt(%{
-                    response_code: status_code,
-                    response_data: body,
-                    watching_id: watching.id,
-                    parsed_value: text,
-                  })
-
-                  :ok
-                # {:error, reason} ->
-                #   IO.puts("Parser error: #{inspect(reason)}")
-              end
-
-            # TODO: handle other HTTPoison responses e.g.
-            # HTTPoison error: %HTTPoison.Error{reason: :nxdomain, id: nil}
-
-            {:error, reason} ->
-              IO.puts("HTTPoison error: #{inspect(reason)}")
-              {:error, reason}
-          end
-        end)
+      {:ok, wat} ->
+        # Start a background job to fetch the data
+        # TODO: put it under a supervision tree
+        Blitz.PeriodicJob.start_link(
+          fn -> Blitz.Spider.perform(wat.id, wat.url, wat.css_selector) end,
+          wat.fetch_frequency_seconds
+        )
 
         # Redirect to the newly created watching
         conn
