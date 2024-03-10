@@ -6,6 +6,7 @@ defmodule Blitz.Core.Watching do
   @foreign_key_type :binary_id
   schema "watchings" do
     field :url, :string
+    field :css_selector, :string
     field :retries, :integer
     field :fetch_frequency_seconds, :integer
     field :user_id, :binary_id
@@ -16,7 +17,7 @@ defmodule Blitz.Core.Watching do
   @doc false
   def changeset(watching, attrs) do
     watching
-    |> cast(attrs, [:url, :retries, :fetch_frequency_seconds, :user_id])
-    |> validate_required([:url])
+    |> cast(attrs, [:url, :css_selector, :retries, :fetch_frequency_seconds, :user_id])
+    |> validate_required([:url, :css_selector, :user_id])
   end
 end
