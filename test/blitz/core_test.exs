@@ -66,7 +66,7 @@ defmodule Blitz.CoreTest do
 
     import Blitz.CoreFixtures
 
-    @invalid_attrs %{response_code: nil, response_data: nil}
+    @invalid_attrs %{response_code: nil, response_data: nil, parsed_value: nil}
 
     test "list_attempts/0 returns all attempts" do
       attempt = attempt_fixture()
@@ -79,11 +79,12 @@ defmodule Blitz.CoreTest do
     end
 
     test "create_attempt/1 with valid data creates a attempt" do
-      valid_attrs = %{response_code: 42, response_data: "some response_data"}
+      valid_attrs = %{response_code: 42, response_data: "some response_data", parsed_value: "some parsed_value"}
 
       assert {:ok, %Attempt{} = attempt} = Core.create_attempt(valid_attrs)
       assert attempt.response_code == 42
       assert attempt.response_data == "some response_data"
+      assert attempt.parsed_value == "some parsed_value"
     end
 
     test "create_attempt/1 with invalid data returns error changeset" do
@@ -92,11 +93,12 @@ defmodule Blitz.CoreTest do
 
     test "update_attempt/2 with valid data updates the attempt" do
       attempt = attempt_fixture()
-      update_attrs = %{response_code: 43, response_data: "some updated response_data"}
+      update_attrs = %{response_code: 43, response_data: "some updated response_data", parsed_value: "some updated parsed_value"}
 
       assert {:ok, %Attempt{} = attempt} = Core.update_attempt(attempt, update_attrs)
       assert attempt.response_code == 43
       assert attempt.response_data == "some updated response_data"
+      assert attempt.parsed_value == "some updated parsed_value"
     end
 
     test "update_attempt/2 with invalid data returns error changeset" do

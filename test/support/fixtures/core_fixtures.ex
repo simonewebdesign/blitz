@@ -27,6 +27,7 @@ defmodule Blitz.CoreFixtures do
     {:ok, attempt} =
       attrs
       |> Enum.into(%{
+        parsed_value: "some parsed_value",
         response_code: 42,
         response_data: "some response_data"
       })

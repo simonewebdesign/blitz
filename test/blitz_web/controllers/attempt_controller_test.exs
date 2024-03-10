@@ -3,9 +3,9 @@ defmodule BlitzWeb.AttemptControllerTest do
 
   import Blitz.CoreFixtures
 
-  @create_attrs %{response_code: 42, response_data: "some response_data"}
-  @update_attrs %{response_code: 43, response_data: "some updated response_data"}
-  @invalid_attrs %{response_code: nil, response_data: nil}
+  @create_attrs %{response_code: 42, response_data: "some response_data", parsed_value: "some parsed_value"}
+  @update_attrs %{response_code: 43, response_data: "some updated response_data", parsed_value: "some updated parsed_value"}
+  @invalid_attrs %{response_code: nil, response_data: nil, parsed_value: nil}
 
   describe "index" do
     test "lists all attempts", %{conn: conn} do

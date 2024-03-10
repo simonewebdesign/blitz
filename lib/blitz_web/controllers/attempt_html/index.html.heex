@@ -10,6 +10,7 @@
 <.table id="attempts" rows={@attempts} row_click={&JS.navigate(~p"/attempts/#{&1}")}>
   <:col :let={attempt} label="Response code"><%= attempt.response_code %></:col>
   <:col :let={attempt} label="Response data"><%= attempt.response_data %></:col>
+  <:col :let={attempt} label="Parsed value"><%= attempt.parsed_value %></:col>
   <:action :let={attempt}>
     <div class="sr-only">
       <.link navigate={~p"/attempts/#{attempt}"}>Show</.link>
