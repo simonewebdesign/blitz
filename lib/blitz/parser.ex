@@ -6,12 +6,12 @@ defmodule Blitz.Parser do
   def parse(response_body, css_selector) do
     {:ok, document} =
       response_body
-      |> Floki.parse_document
+      |> Floki.parse_document()
 
     text =
       document
       |> Floki.find(css_selector)
-      |> Floki.text
+      |> Floki.text()
       |> String.trim_leading()
       |> String.trim_trailing()
 
