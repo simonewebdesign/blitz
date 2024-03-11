@@ -13,8 +13,7 @@ defmodule Blitz.PeriodicJob do
 
   ## Example
 
-      iex> pid = Blitz.PeriodicJob.start_link(&SomeModule.some_function/0, 5)
-      {:ok, #PID<0.42.0>}
+      iex> {:ok, _pid} = Blitz.PeriodicJob.start_link(&(&1), 5)
   """
   @spec start_link((-> :ok), pos_integer()) :: GenServer.on_start()
   def start_link(fun, interval_seconds) do
