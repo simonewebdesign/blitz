@@ -15,11 +15,11 @@ defmodule Blitz.PeriodicJob do
 
       iex> {:ok, _pid} = Blitz.PeriodicJob.start_link(&(&1), 5)
   """
-  @spec start_link((-> :ok), pos_integer()) :: GenServer.on_start()
-  def start_link(fun, interval_seconds) do
-    IO.puts("Starting periodic job with interval #{interval_seconds} seconds")
+  # @spec start_link((-> :ok), pos_integer()) :: GenServer.on_start()
+  def start_link({fun, interval_seconds}) do
     GenServer.start_link(__MODULE__, {fun, interval_seconds * 1000}, name: __MODULE__)
   end
+
 
   @doc "Stops the job."
   @spec stop() :: :ok
@@ -31,7 +31,6 @@ defmodule Blitz.PeriodicJob do
   # Callbacks
 
   def init(args) do
-    IO.puts("Initializing periodic job")
     Process.send(self(), :execute_job, [:noconnect]) # Execute first job immediately
     {:ok, args}
   end
