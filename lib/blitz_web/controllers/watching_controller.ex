@@ -21,10 +21,18 @@ defmodule BlitzWeb.WatchingController do
       {:ok, wat} ->
         # Start a background job to fetch the data
         # TODO: put it under a supervision tree
-        Blitz.PeriodicJob.start_link(
-          fn -> Blitz.Spider.perform(wat.id, wat.url, wat.css_selector) end,
-          wat.fetch_frequency_seconds
-        )
+        # Blitz.PeriodicJob.start_link(
+        #   fn -> Blitz.Spider.perform(wat.id, wat.url, wat.css_selector) end,
+        #   wat.fetch_frequency_seconds
+        # )
+
+        # DynamicSupervisor.start_child(
+        #   Blitz.PeriodicJobDynamicSupervisor,
+        #   {Blitz.PeriodicJob, {
+        #     fn -> Blitz.Spider.perform(wat.id, wat.url, wat.css_selector) end,
+        #     wat.fetch_frequency_seconds
+        #   }}
+        # )
 
         # Redirect to the newly created watching
         conn
