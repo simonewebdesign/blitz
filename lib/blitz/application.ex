@@ -16,7 +16,8 @@ defmodule Blitz.Application do
       {Finch, name: Blitz.Finch},
       # Start a worker by calling: Blitz.Worker.start_link(arg)
       # {Blitz.Worker, arg},
-      {Blitz.PeriodicJobDynamicSupervisor, name: Blitz.PeriodicJobDynamicSupervisor, strategy: :one_for_one},
+      {DynamicSupervisor, name: Blitz.PeriodicJobDynamicSupervisor, strategy: :one_for_one},
+
       # Start to serve requests, typically the last entry
       BlitzWeb.Endpoint
     ]
